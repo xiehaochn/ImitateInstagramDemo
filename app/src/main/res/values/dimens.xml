@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btn_fab_size">56dp</dimen>
+    <dimen name="btn_fan_margins">16dp</dimen>
+    <dimen name="default_evelation">8dp</dimen>
+    <dimen name="toolbar_btn_size">32dp</dimen>
+    <dimen name="ivlogo_height">20dp</dimen>
+    <dimen name="comment_avatar_size">56dp</dimen>
+    <dimen name="comments_btn_size">48dp</dimen>
+</resources>

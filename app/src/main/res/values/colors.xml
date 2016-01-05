@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#2d5d82</color>
+    <color name="colorPrimaryDark">#21425d</color>
+    <color name="colorAccent">#01bcd5</color>
+
+    <color name="fab_color_pressed">#007787</color>
+    <color name="fab_color_shadow">#44000000</color>
+
+    <color name="btn_default_light_normal">#00000000</color>
+    <color name="btn_default_light_pressed">#40ffffff</color>
+
+    <color name="bg_comment">#FFFFFFFF</color>
+    <color name="btn_send_normal">#339900</color>
+    <color name="btn_send_pressed">#CCCCCC</color>
+</resources>
