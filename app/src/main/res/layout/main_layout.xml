@@ -18,14 +18,21 @@
             android:src="@drawable/img_toolbar_logo"
             />
     </android.support.v7.widget.Toolbar>
+    <!--添加一个FrameLayout作为contextmenu的父布局才不会使得toolbar遮挡contextmenu-->
+    <FrameLayout
+        android:layout_below="@id/toolbar"
+        android:id="@+id/flFeed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvFeed"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"
         android:scrollbars="none"
         >
     </android.support.v7.widget.RecyclerView>
+    </FrameLayout>
     <ImageButton
         android:id="@+id/btnCreate"
         android:layout_width="@dimen/btn_fab_size"

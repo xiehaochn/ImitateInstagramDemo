@@ -12,9 +12,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
 import android.view.animation.OvershootInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 
@@ -24,7 +25,11 @@ import android.widget.ImageView;
 public class MainActivity extends AppCompatActivity {
     private static final int ANIM_DURATION_TOOLBAR = 300;
     private static final int ANIM_DURATION_FAB = 400;
+    // BUG:多次点击comment按钮打开多个CommentsActivity。方案：设置标志位isCommentActivityopen
     public static boolean isCommentActivityOpen=false;
+    //BUG:当contextmenu打开时单击空白区域不能自动关闭，且打开CommentsActivity时也不能自动关闭
+    //方案：设置标志位isContextMenuOpen，为包裹recyclerview的frameLayout添加监听时间
+    public static boolean isContextMenuOpen=false;
     private Toolbar toolbar;
     private MenuItem inboxMenuItem;
     private RecyclerView recyclerView;
@@ -51,10 +56,25 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter=new FeedAdapter(this);
         recyclerView.setAdapter(adapter);
+        recyclerView.setOnScrollListener(FeedMenuManager.getInstance());
+        //对recyclerview设置监听，若contextmenu打开则关闭contextmenu当并不消费该次点击时间
+        recyclerView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(isContextMenuOpen){
+                    FeedMenuManager.getInstance().hideContextMenu();
+                }
+                return false;
+            }
+        });
         adapter.setOnClickListener(new FeedAdapter.onClickListener() {
             @Override
             public void onClick(View v, int position) {
                 if(!isCommentActivityOpen) {
+                    //若contextmenu打开则将其关闭
+                    if(isContextMenuOpen){
+                        FeedMenuManager.getInstance().hideContextMenu();
+                    }
                     isCommentActivityOpen = true;
                     final Intent intent = new Intent(context, CommentsActivity.class);
                     //Get location on screen for tapped view

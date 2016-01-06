@@ -7,4 +7,6 @@
     <dimen name="ivlogo_height">20dp</dimen>
     <dimen name="comment_avatar_size">56dp</dimen>
     <dimen name="comments_btn_size">48dp</dimen>
+    <dimen name="context_menu_width">240dp</dimen>
+    <dimen name="context_menu_margin_openingview">70dp</dimen>
 </resources>

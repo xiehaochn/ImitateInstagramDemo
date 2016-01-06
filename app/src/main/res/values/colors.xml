@@ -13,4 +13,5 @@
     <color name="bg_comment">#FFFFFFFF</color>
     <color name="btn_send_normal">#339900</color>
     <color name="btn_send_pressed">#CCCCCC</color>
+    <color name="btn_context_menu_text_red">#CDBA96</color>
 </resources>

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -23,6 +24,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedVH> {
     private Context context;
     private int lastAnimationPosition=-1;
     private int itemCount=0;
+    private FeedMenuManager feedMenuManager;
     private onClickListener onclickListener;
     public FeedAdapter(Context context){
         this.context=context;
@@ -39,7 +41,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedVH> {
     }
 
     @Override
-    public void onBindViewHolder(FeedVH holder, int position) {
+    public void onBindViewHolder(FeedVH holder, final int position) {
         runEnterAnimation(holder.itemView,position);
         if(position%2==0){
             holder.feed_center.setImageResource(R.drawable.img_feed_center_1);
@@ -57,6 +59,35 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedVH> {
                     if (onclickListener != null) {
                         onclickListener.onClick(v,(Integer)v.getTag());
                     }
+                }
+            }
+        });
+        holder.btn_context_menu.setOnClickListener(new ImageButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (v.getId() == R.id.btn_menu) {
+                    feedMenuManager = FeedMenuManager.getInstance();
+                    feedMenuManager.toggleContextMenuFromView(v, position, new FeedContextMenu.OnFeedContextMenuItemClickedListener() {
+                        @Override
+                        public void onReportClick(int feedItem) {
+                            Toast.makeText(context,"You clicked Report",Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onSharePhotoClick(int feedItem) {
+                            Toast.makeText(context,"You clicked SharePhoto",Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCopyShareUrlClick(int feedItem) {
+                            Toast.makeText(context,"You clicked CopyShare",Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onCancelClick(int feedItem) {
+                            feedMenuManager.hideContextMenu();
+                        }
+                    });
                 }
             }
         });
@@ -83,6 +114,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedVH> {
         ImageView feed_center;
         @Bind(R.id.feed_bottom)
         ImageView feed_bottom;
+        @Bind(R.id.btn_menu)
+        ImageButton btn_context_menu;
         public FeedVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);

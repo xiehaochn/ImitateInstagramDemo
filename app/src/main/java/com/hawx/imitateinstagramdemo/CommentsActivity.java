@@ -59,6 +59,7 @@ public class CommentsActivity extends AppCompatActivity {
                 commentsAdapter.addItem();
                 commentsAdapter.setAnimationsLocked(false);
                 commentsAdapter.setDelayEnterAnimation(false);
+                //修正BUG：点击SEND之后添加commentitem错位。方案：先提示adapter数据变化，在滚动至最后一行
                 commentsAdapter.notifyDataSetChanged();
                 rvComments.smoothScrollBy(0, rvComments.getChildAt(0).getHeight() * commentsAdapter.getItemCount());
             }
