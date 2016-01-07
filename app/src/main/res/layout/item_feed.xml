@@ -18,11 +18,32 @@
         android:adjustViewBounds="true"
         android:src="@drawable/ic_feed_top"
         />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
         <ImageView
+            android:background="@drawable/image_likeanimation_background"
             android:id="@+id/feed_center"
             android:adjustViewBounds="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+            <ImageView
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+                android:id="@+id/anim_like"
+                android:layout_width="@dimen/btn_fab_size"
+                android:layout_height="@dimen/btn_fab_size"
+                android:src="@drawable/ic_btn_like"
+                />
+            <ImageView
+                android:layout_centerInParent="true"
+                android:visibility="invisible"
+                android:id="@+id/anim_bg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/image_likeanimation_background"
+                />
+        </RelativeLayout>
         <ImageView
             android:id="@+id/feed_bottom"
             android:layout_width="match_parent"
@@ -59,6 +80,40 @@
                 android:src="@drawable/ic_btn_menu"
                 android:background="@drawable/feed_btn_bg"
                 android:layout_toRightOf="@id/btn_comment" />
+            <LinearLayout
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+            <ImageView
+                android:src="@drawable/ic_like_counts"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+            <TextSwitcher
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:id="@+id/like_counts_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inAnimation="@anim/slide_in_done"
+                android:outAnimation="@anim/slide_out_send"
+                >
+                <TextView
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="18sp"
+                    />
+            </TextSwitcher>
+            </LinearLayout>
         </RelativeLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
