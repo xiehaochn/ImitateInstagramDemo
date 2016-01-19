@@ -123,7 +123,7 @@ public class CommentsActivity extends AppCompatActivity {
         setTheme(R.style.AppTheme);
     }
     private void setupComments() {
-        rvComments.setOnScrollListener(new RecyclerView.OnScrollListener() {
+        rvComments.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {

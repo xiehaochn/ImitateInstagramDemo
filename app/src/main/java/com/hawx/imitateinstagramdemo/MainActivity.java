@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter=new FeedAdapter(this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setOnScrollListener(FeedMenuManager.getInstance());
+        recyclerView.addOnScrollListener(FeedMenuManager.getInstance());
         //对recyclerview设置监听，若contextmenu打开则关闭contextmenu当并不消费该次点击时间
         recyclerView.setOnTouchListener(new View.OnTouchListener() {
             @Override

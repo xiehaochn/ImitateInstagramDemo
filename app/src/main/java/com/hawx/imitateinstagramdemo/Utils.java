@@ -23,7 +23,7 @@ public class Utils implements Transformation{
         Display display=windowManager.getDefaultDisplay();
         Point point=new Point();
         display.getSize(point);
-        int height=point.x;
+        int height=point.y;
         return height;
     }
 
@@ -32,7 +32,7 @@ public class Utils implements Transformation{
         Display display=windowManager.getDefaultDisplay();
         Point point=new Point();
         display.getSize(point);
-        int width=point.y;
+        int width=point.x;
         return width;
     }
 
