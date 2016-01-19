@@ -86,6 +86,16 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        adapter.setOnProfileClickListener(new FeedAdapter.OnProfileClickListener() {
+            @Override
+            public void onProfileClicked(View v) {
+                int[] startLocation=new int[2];
+                v.getLocationOnScreen(startLocation);
+                startLocation[0]+=v.getWidth()/4;
+                ProfileAvtivity.startFromLocation(startLocation,MainActivity.this);
+                overridePendingTransition(0,0);
+            }
+        });
     }
 
     @Override

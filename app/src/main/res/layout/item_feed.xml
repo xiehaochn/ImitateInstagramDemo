@@ -12,12 +12,49 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <ImageView
+    <RelativeLayout
+        android:paddingLeft="2dp"
+        android:paddingRight="2dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:src="@drawable/ic_feed_top"
-        />
+        android:layout_height="wrap_content">
+        <ImageButton
+            android:layout_alignParentStart="true"
+            android:id="@+id/profile"
+            android:adjustViewBounds="true"
+            android:layout_width="@dimen/comments_btn_size"
+            android:layout_height="@dimen/comments_btn_size"
+            android:background="@android:color/transparent"
+            android:layout_alignParentLeft="true" />
+        <TextView
+            android:paddingLeft="3dp"
+            android:textStyle="bold"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="HawX"
+            android:textColor="@color/colorPrimary"
+            android:textSize="18sp"
+            />
+        <TextView
+            android:id="@+id/text1"
+            android:paddingRight="3dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:text="14h"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="16sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <ImageView
+
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/text1"
+            android:src="@drawable/ic_time"
+            android:layout_width="@dimen/btn_fan_margins"
+            android:layout_height="@dimen/btn_fan_margins"
+             />
+    </RelativeLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">

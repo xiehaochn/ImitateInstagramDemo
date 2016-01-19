@@ -5,6 +5,9 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
 import android.support.v7.widget.ViewUtils;
@@ -16,6 +19,7 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.Interpolator;
 import android.view.animation.OvershootInterpolator;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextSwitcher;
@@ -35,6 +39,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedVH> {
     private int itemCount=0;
     private FeedMenuManager feedMenuManager;
     private onClickListener onclickListener;
+    private OnProfileClickListener onProfileClickListener;
     public FeedAdapter(Context context){
         this.context=context;
     }
@@ -114,6 +119,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedVH> {
                     showImageAnimation(holder, position);
                     updateLikesCount(holder, position, true);
                     updateLikeButton(holder,position,true);
+                }
+            }
+        });
+        Utils utils=new Utils();
+        Bitmap bitmap=utils.transform(BitmapFactory.decodeResource(context.getResources(),R.drawable.ic_avatar));
+        holder.profile.setImageBitmap(bitmap);
+        holder.profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onProfileClickListener!=null){
+                    onProfileClickListener.onProfileClicked(v);
                 }
             }
         });
@@ -249,6 +265,8 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedVH> {
         ImageView animLike;
         @Bind(R.id.anim_bg)
         ImageView animBg;
+        @Bind(R.id.profile)
+        ImageButton profile;
         public FeedVH(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
@@ -264,5 +282,11 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.FeedVH> {
     }
     public void setOnClickListener(onClickListener onClickListener){
         this.onclickListener=onClickListener;
+    }
+    public void setOnProfileClickListener(OnProfileClickListener onProfileClickListener){
+        this.onProfileClickListener=onProfileClickListener;
+    }
+    public interface OnProfileClickListener{
+        void onProfileClicked(View v);
     }
 }
