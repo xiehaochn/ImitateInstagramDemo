@@ -14,4 +14,5 @@
     <color name="btn_send_normal">#339900</color>
     <color name="btn_send_pressed">#CCCCCC</color>
     <color name="btn_context_menu_text_red">#CDBA96</color>
+    <color name="globalmenu_textcolor">#8a8a8a</color>
 </resources>

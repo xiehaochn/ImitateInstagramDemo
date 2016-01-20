@@ -5,11 +5,16 @@ import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -22,7 +27,7 @@ import android.widget.ImageView;
 /**
  * Created by Administrator on 2015/12/31.
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GlobalMenuView.OnHeaderClickListener {
     private static final int ANIM_DURATION_TOOLBAR = 300;
     private static final int ANIM_DURATION_FAB = 400;
     // BUG:多次点击comment按钮打开多个CommentsActivity。方案：设置标志位isCommentActivityopen
@@ -38,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ivLogo;
     private boolean pendingIntroAnimation;
     private Context context;
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +103,20 @@ public class MainActivity extends AppCompatActivity {
                 overridePendingTransition(0,0);
             }
         });
+        setupDrawer();
     }
+
+    private void setupDrawer() {
+        GlobalMenuView menuView = new GlobalMenuView(this);
+        menuView.setOnHeaderClickListener(this);
+
+        drawerLayout = DrawerLayoutInstaller.from(this)
+                .drawerRoot(R.layout.drawer_root)
+                .drawerLeftView(menuView)
+                .withNavigationIconToggler(toolbar)
+                .build();
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -145,5 +165,20 @@ public class MainActivity extends AppCompatActivity {
                 .setDuration(ANIM_DURATION_FAB)
                 .start();
         adapter.updateItems();
+    }
+
+    @Override
+    public void onGlobalMenuHeaderClick(final View v) {
+        drawerLayout.closeDrawer(GravityCompat.START);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int[] startingLocation = new int[2];
+                v.getLocationOnScreen(startingLocation);
+                startingLocation[0] += v.getWidth() / 2;
+                ProfileAvtivity.startFromLocation(startingLocation, MainActivity.this);
+                overridePendingTransition(0, 0);
+            }
+        }, 200);
     }
 }

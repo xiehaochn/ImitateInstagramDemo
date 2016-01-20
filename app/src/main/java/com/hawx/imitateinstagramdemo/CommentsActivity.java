@@ -6,7 +6,10 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -29,7 +32,7 @@ import butterknife.OnClick;
 /**
  * Created by Administrator on 2016/1/5.
  */
-public class CommentsActivity extends AppCompatActivity {
+public class CommentsActivity extends AppCompatActivity implements GlobalMenuView.OnHeaderClickListener {
     public static final String ARG_DRAWING_START_LOCATION = "arg_drawing_start_location";
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -65,6 +68,8 @@ public class CommentsActivity extends AppCompatActivity {
             }
         }
     };
+    private DrawerLayout drawerLayout;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +100,18 @@ public class CommentsActivity extends AppCompatActivity {
         }
         setupComments();
         sendCommentButton.setOnSendClickListener(onSendClickListener);
+        setupDrawer();
+    }
+
+    private void setupDrawer() {
+        GlobalMenuView menuView = new GlobalMenuView(this);
+        menuView.setOnHeaderClickListener(this);
+
+        drawerLayout = DrawerLayoutInstaller.from(this)
+                .drawerRoot(R.layout.drawer_root)
+                .drawerLeftView(menuView)
+                .withNavigationIconToggler(toolbar)
+                .build();
     }
 
     private void startIntroAnimation() {
@@ -156,5 +173,20 @@ public class CommentsActivity extends AppCompatActivity {
         inboxMenuItem=menu.findItem(R.id.action_inbox);
         inboxMenuItem.setActionView(R.layout.menu_item_view);
         return true;
+    }
+
+    @Override
+    public void onGlobalMenuHeaderClick(final View v) {
+        drawerLayout.closeDrawer(GravityCompat.START);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                int[] startingLocation = new int[2];
+                v.getLocationOnScreen(startingLocation);
+                startingLocation[0] += v.getWidth() / 2;
+                ProfileAvtivity.startFromLocation(startingLocation, CommentsActivity.this);
+                overridePendingTransition(0, 0);
+            }
+        }, 200);
     }
 }

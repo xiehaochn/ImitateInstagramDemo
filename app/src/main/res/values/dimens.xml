@@ -10,4 +10,5 @@
     <dimen name="context_menu_width">240dp</dimen>
     <dimen name="context_menu_margin_openingview">70dp</dimen>
     <dimen name="stroke_width">2dp</dimen>
+    <dimen name="profile_avatarsize">100dp</dimen>
 </resources>
